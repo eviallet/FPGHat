@@ -1,0 +1,9 @@
+*.o
+analysis/
+datasheets/
+fpga/build/
+hardware/arduino-shields/
+hardware/FPGHat-backups/
+stm32/lvgl/
+stm32/build/
+

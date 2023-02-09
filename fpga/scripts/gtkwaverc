@@ -1,0 +1,17 @@
+use_big_fonts 1
+use_fat_lines 1
+initial_window_xpos 0
+initial_window_x 1920
+initial_window_ypos 0  
+initial_window_y 1080
+
+fill_waveform 1
+
+color_back 232932
+color_grid 616161
+color_0 81bebe
+color_1 81bebe
+color_trans 81bebe
+color_1fill 328585
+
+splash_disable 1

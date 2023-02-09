@@ -1,0 +1,76 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "./scripts/clean.sh",
+            "group": "build",
+            "presentation": {
+                "reveal": "never",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Simulate",
+            "type": "shell",
+            "command": "./scripts/simulate.sh",
+            "args": ["${file}"],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Analyze",
+            "type": "shell",
+            "command": "./scripts/analyze.sh",
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Synthetize",
+            "type": "shell",
+            "command": "./scripts/synthetize.sh",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "PNR",
+            "type": "shell",
+            "command": "./scripts/place_route.sh",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Flash",
+            "type": "shell",
+            "command": "./scripts/flash.sh",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run all",
+            "type": "shell",
+            "command": "./scripts/all.sh",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+    ]
+}

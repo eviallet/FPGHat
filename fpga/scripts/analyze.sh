@@ -1,0 +1,1 @@
+ghdl -a --workdir=build/work $(ls | grep -E "[^_tb]\.vhd" | xargs)

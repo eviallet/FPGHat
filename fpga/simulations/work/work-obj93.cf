@@ -1,0 +1,7 @@
+v 4
+file "/home/gueg/Progra/FPGHat/fpga/" "seg.vhd" "138bec0f9eba6b9a0f04a0e224d7c95e2f06797f" "20230209190825.559":
+  entity seg at 1( 0) + 0 on 251;
+  architecture rtl of seg at 35( 868) + 0 on 252;
+file "/home/gueg/Progra/FPGHat/fpga/" "seg_tb.vhd" "4fd03a305b7fc646d8dd74f5cd50904ed8bdc5c2" "20230209190825.728":
+  entity seg_tb at 1( 0) + 0 on 253;
+  architecture rtl of seg_tb at 8( 100) + 0 on 254;

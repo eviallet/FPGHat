@@ -1,0 +1,39 @@
+# main fpga signals
+set_io   -pullup yes    nrst        104
+set_io                  rclk        98
+
+# leds
+set_io                  led0        141
+set_io                  led1        143
+set_io                  led2        144
+set_io                  led3        142
+set_io                  led4        3
+set_io                  led5        1
+set_io                  led6        2
+set_io                  led7        4
+
+# switches
+set_io   -pullup yes    sw          136
+set_io   -pullup yes    btn         101
+
+# uart
+set_io                  ftdi_rx     87
+set_io                  ftdi_tx     90
+
+# segments
+set_io                  seg_a0      19
+set_io                  seg_a1      31
+set_io                  seg_a2      21
+set_io                  seg_a3      10
+set_io                  seg_a4      8
+set_io                  seg_k0      9
+set_io                  seg_k1      29
+set_io                  seg_k2      33
+set_io                  seg_k3      22
+set_io                  seg_k4      20
+set_io                  seg_k5      12
+set_io                  seg_k6      11
+set_io                  seg_k7      32
+
+# rgb
+set_io                  rgb         23

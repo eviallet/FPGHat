@@ -1,0 +1,1 @@
+yosys -m ghdl -p "ghdl --workdir=build/work/ $(ls | grep -E '[^_tb]\.vhd' | xargs) -e top; synth_ice40 -json build/fpghat.json"

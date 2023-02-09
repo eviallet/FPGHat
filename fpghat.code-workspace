@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "fpga"
+		},
+		{
+			"path": "stm32"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"Kconfig": "kconfig",
+			"*.dts": "c",
+			"*.pcf": "shellscript",
+			"stm32f4xx_hal_def.h": "c",
+			"stm32f4xx.h": "c"
+		}
+	}
+}
