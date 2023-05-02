@@ -4,7 +4,10 @@
 			"path": "fpga"
 		},
 		{
-			"path": "stm32"
+			"path": "lvgl/simulator"
+		},
+		{
+			"path": "lvgl/stm32"
 		}
 	],
 	"settings": {
@@ -13,7 +16,23 @@
 			"*.dts": "c",
 			"*.pcf": "shellscript",
 			"stm32f4xx_hal_def.h": "c",
-			"stm32f4xx.h": "c"
+			"stm32f4xx.h": "c",
+			"menu.h": "c",
+			"scope.h": "c",
+			"lvgl.h": "c",
+			"chart.h": "c",
+			"cstdio": "c",
+			"lv_font_loader.h": "c",
+			"lv_font.h": "c",
+			"fonts.h": "c",
+			"stm32469i_discovery_lcd.h": "c",
+			"stm32469i_discovery_sdram.h": "c",
+			"stm32469i_discovery.h": "c",
+			"touch_sensor_driver.h": "c",
+			"screen_driver.h": "c",
+			"lv_demo_benchmark.h": "c",
+			"lv_demos.h": "c",
+			"lv_drv_conf.h": "c"
 		}
 	}
 }

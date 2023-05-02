@@ -1,0 +1,31 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Sun Mar 12 11:00:24 2023
+[*]
+[dumpfile] "/home/gueg/Progra/FPGHat/fpga/simulations/adc.fst"
+[dumpfile_mtime] "Sun Mar 12 11:00:18 2023"
+[dumpfile_size] 742
+[savefile] "/home/gueg/Progra/FPGHat/fpga/simulations/adc.gtkw"
+[timestart] 0
+[size] 1920 994
+[pos] 29 25
+*-27.118093 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 291
+[signals_width] 230
+[sst_expanded] 1
+[sst_vpaned_height] 245
+@28
+sig_clk
+sig_sample_available
+sig_sample_request
+@29
+sig_adc_clk
+@28
+sig_sck
+@22
+sig_sdi[9:0]
+@28
+sig_sdo
+sig_ssn
+[pattern_trace] 1
+[pattern_trace] 0

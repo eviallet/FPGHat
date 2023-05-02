@@ -34,7 +34,7 @@ end entity;
 
 architecture rtl of seg is
     signal segments : std_logic_vector(6 downto 0);
-    signal seg_select : std_logic_vector(n_digits-1 downto 0); -- the segment which is currently set to 0 is lightened up (cathode)
+    signal seg_select : std_logic_vector(n_digits-1 downto 0); -- the segment which is currently set to 1 is lightened up (anode)
 begin
     -- Map physical pins to a vector for easy assignments
     SEG_A <= segments(6);
@@ -58,11 +58,11 @@ begin
             current_period := 0;
             current_digit := 0;
             rolling_digits := (others => '0');
-            seg_select <= (0 => '0', others => '1');
             displayed_digit := "0000";
             -- External signals
-            segments <= (others => '0'); -- digit
-            SEG_DP <= '0'; -- decimal point
+            segments <= (others => '1'); -- digit
+            seg_select <= (3 => '1', others => '0');
+            SEG_DP <= '1'; -- decimal point
         elsif rising_edge(CLK) then
             if current_digit = 0 and current_period = 0 then
                 -- On rollover, refresh digits and decimal points to display
@@ -75,22 +75,22 @@ begin
                 displayed_digit := rolling_digits(3 downto 0);
                 case displayed_digit is
                     --    DIGIT                 ABCDEFG
-                    when "0000" => segments <= "1111110";
-                    when "0001" => segments <= "0110000";
-                    when "0010" => segments <= "1101101";
-                    when "0011" => segments <= "1111001";
-                    when "0100" => segments <= "0110011";
-                    when "0101" => segments <= "1011011";
-                    when "0110" => segments <= "1011111";
-                    when "0111" => segments <= "1110000";
-                    when "1000" => segments <= "1111111";
-                    when "1001" => segments <= "1111011";
-                    when "1010" => segments <= "1110111"; -- A
-                    when "1011" => segments <= "0011111"; -- b
-                    when "1100" => segments <= "1001110"; -- C
-                    when "1101" => segments <= "0111100"; -- d
-                    when "1110" => segments <= "1001111"; -- E
-                    when "1111" => segments <= "1000111"; -- F
+                    when "0000" => segments <= "0000001";
+                    when "0001" => segments <= "1001111";
+                    when "0010" => segments <= "0010010";
+                    when "0011" => segments <= "0000110";
+                    when "0100" => segments <= "1001100";
+                    when "0101" => segments <= "0100100";
+                    when "0110" => segments <= "0100000";
+                    when "0111" => segments <= "0001111";
+                    when "1000" => segments <= "0000000";
+                    when "1001" => segments <= "0000100";
+                    when "1010" => segments <= "0001000"; -- A
+                    when "1011" => segments <= "1100000"; -- b
+                    when "1100" => segments <= "0110001"; -- C
+                    when "1101" => segments <= "1000011"; -- d
+                    when "1110" => segments <= "0110000"; -- E
+                    when "1111" => segments <= "0111000"; -- F
                     when others => null;
                 end case;
                 current_period := current_period + 1;
@@ -99,8 +99,8 @@ begin
 
                 -- Turn off segments drive after `drive_periods_per_digit` clock periods
                 if current_period = drive_periods_per_digit then
-                    segments <= "0000000";
-                    SEG_DP <= '0';
+                    segments <= (others => '1');
+                    SEG_DP <= '1';
                 end if;
 
             else -- current_period = `clock_edges_per_digit`

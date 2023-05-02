@@ -57,7 +57,9 @@ begin
     '0' after 10 ns;
 
     -- Try to display "1" for the first seg display, "2" for the other
-    sig_in_digits <= "10010001" when in_rst = '0';
+    sig_in_digits <=
+        "10010001", 
+        "00000010" after clk_half_period * 2 * 20;
 
     -- Try to display a decimal point between both digits
     sig_in_dp <= "10" when in_rst = '0';

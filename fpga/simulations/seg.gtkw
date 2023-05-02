@@ -1,35 +1,45 @@
 [*]
 [*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
-[*] Thu Feb  9 16:58:31 2023
+[*] Fri Feb 10 16:03:08 2023
 [*]
 [dumpfile] "/home/gueg/Progra/FPGHat/fpga/simulations/seg.fst"
-[dumpfile_mtime] "Thu Feb  9 16:57:17 2023"
-[dumpfile_size] 575
+[dumpfile_mtime] "Fri Feb 10 16:01:51 2023"
+[dumpfile_size] 576
 [savefile] "/home/gueg/Progra/FPGHat/fpga/simulations/seg.gtkw"
 [timestart] 0
 [size] 1920 984
 [pos] -1 -1
-*-41.291229 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-41.291229 18640000000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [sst_width] 294
 [signals_width] 210
 [sst_expanded] 1
-[sst_vpaned_height] 186
+[sst_vpaned_height] 120
 @28
 sig_in_clk
 @22
 sig_in_digits[7:0]
 @28
 sig_in_dp[1:0]
-@800022
+@802022
+[color] 6
+^1 /home/gueg/Progra/FPGHat/fpga/simulations/seg.map
 sig_out_segs[7:0]
-@28
+@2028
+^1 /home/gueg/Progra/FPGHat/fpga/simulations/seg.map
 +{seg_g} (0)sig_out_segs[7:0]
+^1 /home/gueg/Progra/FPGHat/fpga/simulations/seg.map
 +{seg_f} (1)sig_out_segs[7:0]
+^1 /home/gueg/Progra/FPGHat/fpga/simulations/seg.map
 +{seg_e} (2)sig_out_segs[7:0]
+^1 /home/gueg/Progra/FPGHat/fpga/simulations/seg.map
 +{seg_d} (3)sig_out_segs[7:0]
+^1 /home/gueg/Progra/FPGHat/fpga/simulations/seg.map
 +{seg_c} (4)sig_out_segs[7:0]
+^1 /home/gueg/Progra/FPGHat/fpga/simulations/seg.map
 +{seg_b} (5)sig_out_segs[7:0]
+^1 /home/gueg/Progra/FPGHat/fpga/simulations/seg.map
 +{seg_a} (6)sig_out_segs[7:0]
+^1 /home/gueg/Progra/FPGHat/fpga/simulations/seg.map
 +{decimal_point} (7)sig_out_segs[7:0]
 @1001200
 -group_end

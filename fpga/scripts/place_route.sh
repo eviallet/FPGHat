@@ -1,4 +1,4 @@
-nextpnr-ice40 --package hx1k --pcf pins.pcf --json build/fpghat.json --asc build/bitstream.asc 2>&1 | tee pnr_output && # --placed-svg build/placed.svg --routed-svg build/routed.svg 
+nextpnr-ice40 --package hx1k --pcf pins.pcf --freq 120 --json build/fpghat.json --asc build/bitstream.asc 2>&1 | tee pnr_output && # --placed-svg build/placed.svg --routed-svg build/routed.svg 
 icepack build/bitstream.asc build/bitstream.bin 
 
 echo

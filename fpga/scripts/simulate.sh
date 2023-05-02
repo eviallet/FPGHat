@@ -3,6 +3,7 @@
 filename=$(echo "$1" | sed -E "s/.+\/([A-Za-z0-9]+)(_tb)?\.vhd/\1/")
 tb_file=$(echo "$1" | sed -E "s/.+\/([A-Za-z0-9]+)(_tb)?\.vhd/\1_tb/")
 
+source scripts/analyze.sh
 ghdl -a --workdir=simulations/work/ "$filename.vhd" "$tb_file.vhd" &&
 ghdl --elab-run --workdir=simulations/work/ -o "simulations/work/$tb_file" "$tb_file" --fst="./simulations/$filename.fst"
 

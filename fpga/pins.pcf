@@ -20,6 +20,12 @@ set_io   -pullup yes    btn         101
 set_io                  ftdi_rx     87
 set_io                  ftdi_tx     90
 
+# adc
+set_io   -pullup yes    adc_ssn     38
+set_io                  adc_clk     41
+set_io                  adc1_sdo    42
+set_io                  adc2_sdo    39
+
 # segments
 set_io                  seg_a0      19
 set_io                  seg_a1      31
@@ -37,3 +43,26 @@ set_io                  seg_k7      32
 
 # rgb
 set_io                  rgb         23
+
+# connectors
+# cn1
+set_io                  cn1_1       137
+set_io                  cn1_2       139
+set_io                  cn1_3       138
+set_io                  cn1_5       135
+set_io                  cn1_10      134
+set_io                  cn1_11      129
+set_io                  cn1_12      128
+set_io                  cn1_13      120
+set_io                  cn1_14      121
+set_io                  cn1_15      118
+set_io                  cn1_16      117
+set_io                  cn1_18      115
+# cn2
+set_io                  cn2_8       43
+set_io                  cn2_9       47
+set_io                  cn2_11      56
+set_io                  cn2_13      58
+set_io                  cn2_19      73
+set_io                  cn2_20      79
+set_io                  cn2_21      74

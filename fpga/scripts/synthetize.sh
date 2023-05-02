@@ -1,1 +1,2 @@
-yosys -m ghdl -p "ghdl --workdir=build/work/ $(ls | grep -E '[^_tb]\.vhd' | xargs) -e top; synth_ice40 -json build/fpghat.json"
+files=$(python -c "import os; print(' '.join([x for x in os.listdir() if x.endswith('.vhd') and '_tb' not in x and x != 'top.vhd'] + ['top.vhd']))")
+yosys -m ghdl -p "ghdl --workdir=build/work/ $files -e top; synth_ice40 -json build/fpghat.json"

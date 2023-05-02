@@ -72,5 +72,15 @@
                 "panel": "new"
             }
         },
+        {
+            "label": "Run all and flash",
+            "type": "shell",
+            "command": "./scripts/all.sh && ./scripts/flash.sh",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
     ]
 }
