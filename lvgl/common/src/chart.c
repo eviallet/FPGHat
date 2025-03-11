@@ -1,5 +1,5 @@
 #ifdef BUILD_STM32
-  #include "chart.h"
+  #include "common/chart.h"
 #else
   #include "common/inc/chart.h"
 #endif
@@ -12,6 +12,7 @@ static void draw_event_cb(lv_event_t * e)
 {
     lv_obj_t * obj = lv_event_get_target(e);
 
+    /*Add the faded area before the lines are drawn*/
     lv_obj_draw_part_dsc_t * dsc = lv_event_get_draw_part_dsc(e);
     if(dsc->part == LV_PART_ITEMS) {
         if(!dsc->p1 || !dsc->p2) return;
@@ -49,27 +50,42 @@ static void draw_event_cb(lv_event_t * e)
         if(dsc->line_dsc == NULL) return;
 
         // Vertical grid line
-        // if(dsc->p1->x == dsc->p2->x) {}
+        if(dsc->p1->x == dsc->p2->x) {
+            if (dsc->id == CHART_GRID_0) {
+                dsc->line_dsc->color = lv_color_hex(CHART_GRID_MAJOR_COLOR);
+                dsc->line_dsc->width = 3;
+                dsc->line_dsc->dash_gap  = 0;
+                dsc->line_dsc->dash_width  = 0;
+            } else {
+                dsc->line_dsc->color = lv_color_hex(CHART_GRID_MINOR_COLOR);
+                dsc->line_dsc->width = 1;
+                dsc->line_dsc->dash_gap  = 6;
+                dsc->line_dsc->dash_width  = 6;
+            }
+        }
         // Horizontal grid line
-        // else {}
-
-        if (dsc->id == CHART_GRID_0) {
-            dsc->line_dsc->color = lv_color_hex(CHART_GRID_MAJOR_COLOR);
-            dsc->line_dsc->width = 3;
-            dsc->line_dsc->dash_gap  = 0;
-            dsc->line_dsc->dash_width  = 0;
-        } else {
-            dsc->line_dsc->color = lv_color_hex(CHART_GRID_MINOR_COLOR);
-            dsc->line_dsc->width = 2;
-            dsc->line_dsc->dash_gap  = 6;
-            dsc->line_dsc->dash_width  = 6;
+        else {
+            if(dsc->id == CHART_GRID_0) {
+                dsc->line_dsc->color = lv_color_hex(CHART_GRID_MAJOR_COLOR);
+                dsc->line_dsc->width = 3;
+                dsc->line_dsc->dash_gap  = 0;
+                dsc->line_dsc->dash_width  = 0;
+            } else {
+                dsc->line_dsc->color = lv_color_hex(CHART_GRID_MINOR_COLOR);
+                dsc->line_dsc->width = 2;
+                dsc->line_dsc->dash_gap  = 6;
+                dsc->line_dsc->dash_width  = 6;
+            }
         }
     }
 }
 
-void add_data(uint8_t ser_index, int16_t x, int16_t y) {
-    lv_chart_series_t *ser = ser_index == CHART_CH1 ? ser1 : ser2;
-    lv_chart_set_next_value(chart1, ser, y);
+void add_data(uint8_t ser_index, int16_t x, int16_t y)
+{
+    // static uint32_t cnt = 0;
+    // lv_chart_set_next_value(chart1, ser1, lv_rand(20, 90));
+    // if(cnt % 4 == 0) lv_chart_set_next_value(chart1, ser2, lv_rand(40, 60));
+    // cnt++;
 }
 
 /**
@@ -92,14 +108,14 @@ void create_scope_chart(void)
     // Series
     ser1 = lv_chart_add_series(chart1, lv_color_hex(CHART_CH1_COLOR), LV_CHART_AXIS_PRIMARY_Y);
     ser2 = lv_chart_add_series(chart1, lv_color_hex(CHART_CH2_COLOR), LV_CHART_AXIS_SECONDARY_Y);
-    // uint32_t i;
-    // for(i = 0; i < 10; i++) {
-    //     lv_chart_set_next_value(chart1, ser1, lv_rand(20, 90));
-    //     lv_chart_set_next_value(chart1, ser2, lv_rand(30, 70));
-    // }
+    uint32_t i;
+    for(i = 0; i < 10; i++) {
+        lv_chart_set_next_value(chart1, ser1, lv_rand(20, 90));
+        lv_chart_set_next_value(chart1, ser2, lv_rand(30, 70));
+    }
     // Callbacks
     lv_chart_set_update_mode(chart1, LV_CHART_UPDATE_MODE_SHIFT);
     lv_obj_add_event_cb(chart1, draw_event_cb, LV_EVENT_DRAW_PART_BEGIN, NULL);
-    // lv_timer_create(add_data, 200, NULL);
+    lv_timer_create(add_data, 200, NULL);
 }
 

@@ -19,6 +19,13 @@ set_io   -pullup yes    btn         101
 # uart
 set_io                  ftdi_rx     87
 set_io                  ftdi_tx     90
+set_io                  fpga_rx     76
+set_io                  fpga_tx     78
+
+# spi
+set_io                  st_spi_sck  44
+set_io                  st_spi_sdo  45
+set_io                  st_spi_nss  50
 
 # adc
 set_io   -pullup yes    adc_ssn     38

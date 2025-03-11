@@ -1,13 +1,13 @@
 {
 	"folders": [
 		{
-			"path": "fpga"
+			"path": "lvgl/stm32"
 		},
 		{
 			"path": "lvgl/simulator"
 		},
 		{
-			"path": "lvgl/stm32"
+			"path": "fpga"
 		}
 	],
 	"settings": {
@@ -15,24 +15,25 @@
 			"Kconfig": "kconfig",
 			"*.dts": "c",
 			"*.pcf": "shellscript",
-			"stm32f4xx_hal_def.h": "c",
-			"stm32f4xx.h": "c",
-			"menu.h": "c",
-			"scope.h": "c",
-			"lvgl.h": "c",
-			"chart.h": "c",
-			"cstdio": "c",
-			"lv_font_loader.h": "c",
-			"lv_font.h": "c",
-			"fonts.h": "c",
-			"stm32469i_discovery_lcd.h": "c",
-			"stm32469i_discovery_sdram.h": "c",
-			"stm32469i_discovery.h": "c",
-			"touch_sensor_driver.h": "c",
+			"freertos.h": "c",
+			"cmsis_os.h": "c",
+			"main.h": "c",
+			"cmsis_os2.h": "c",
+			"stdlib.h": "c",
 			"screen_driver.h": "c",
-			"lv_demo_benchmark.h": "c",
-			"lv_demos.h": "c",
-			"lv_drv_conf.h": "c"
+			"stm32469i_discovery_lcd.h": "c",
+			"otm8009a.h": "c",
+			"fonts.h": "c",
+			"ui_callbacks.h": "c",
+			"ui_callbacks_threads.h": "c",
+			"scope.h": "c",
+			"chart.h": "c",
+			"lvgl.h": "c",
+			"hsi_threads.h": "c",
+			"string.h": "c",
+			"nt35510.h": "c",
+			"stm32469i_discovery_sdram.h": "c",
+			"lvgl_threads.h": "c"
 		}
 	}
 }

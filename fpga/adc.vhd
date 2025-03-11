@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.all;
 
 entity adc is
     generic (
-        -- TODO adc_count : natural := 2;
+        adc_count : natural := 2;
         adc_data_bits : natural := 10;
         adc_dummy_bits : natural := 2
     );
@@ -13,11 +13,9 @@ entity adc is
         -- Physical pins
         SCK  : out std_logic;
         SSN  : out std_logic;
-        -- TODO SDI  : in std_logic_vector(adc_count downto 0);
-        SDI  : in std_logic;
+        SDI  : in std_logic_vector(adc_count-1 downto 0);
         -- Registers
-        -- TODO DAT  : out std_logic_vector(((adc_count+1)*adc_data_bits)-1 downto 0);
-        DAT  : out std_logic_vector(adc_data_bits-1 downto 0);
+        DAT  : out std_logic_vector((adc_count*adc_data_bits)-1 downto 0);
         -- Control & monitoring
         SAMPLE_REQUEST : in std_logic;
         SAMPLE_AVAILABLE : out std_logic
@@ -77,10 +75,9 @@ begin
                     if dummy_bit_cnt < adc_dummy_bits then
                         dummy_bit_cnt := dummy_bit_cnt + 1;
                     else
-                        -- TODO for adc_idx in 0 to adc_count loop
-                        --     DAT(data_bit_cnt) <= SDI(adc_idx);
-                        -- end loop;
-                        DAT(adc_data_bits-data_bit_cnt-1) <= SDI;
+                        for adc_idx in 0 to adc_count-1 loop
+                            DAT((adc_data_bits*adc_idx) + data_bit_cnt) <= SDI(adc_idx);
+                        end loop;
                         data_bit_cnt := data_bit_cnt + 1;
                         if data_bit_cnt = adc_data_bits then
                             state <= state_end;

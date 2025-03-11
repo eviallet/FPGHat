@@ -4,8 +4,8 @@
 #include "lvgl.h"
 
 #ifdef BUILD_STM32
-  #include "chart.h"
-  #include "menu.h"
+  #include "common/chart.h"
+  #include "common/menu.h"
 #else
   #include "common/inc/chart.h"
   #include "common/inc/menu.h"

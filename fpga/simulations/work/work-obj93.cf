@@ -1,28 +1,34 @@
 v 4
-file "/home/gueg/Progra/FPGHat/fpga/" "adc.vhd" "adff0d3ebfd3a3405287c2c6fd22690e84c4b657" "20230331092249.324":
-  entity adc at 1( 0) + 0 on 787;
-  architecture rtl of adc at 28( 751) + 0 on 788;
-file "/home/gueg/Progra/FPGHat/fpga/" "buf.vhd" "f66b2360806353b00a81b0382a2c3d8499ac5999" "20230213060406.116":
-  entity buf at 1( 0) + 0 on 395;
-  architecture buf_arch of buf at 17( 267) + 0 on 396;
-file "/home/gueg/Progra/FPGHat/fpga/" "uart.vhd" "39a4c0bc03eec532a207f0ab42b056105fb32859" "20230331152259.935":
-  entity uart at 1( 0) + 0 on 791;
-  architecture uart_arch of uart at 26( 686) + 0 on 792;
-file "/home/gueg/Progra/FPGHat/fpga/" "clkgen.vhd" "d24d7721bbde1b3944a354c6e3fe09d7c3f8fd34" "20230214061247.448":
-  entity clkgen at 1( 0) + 0 on 607;
-  architecture rtl of clkgen at 20( 482) + 0 on 608;
-file "/home/gueg/Progra/FPGHat/fpga/" "seg_tb.vhd" "c1bd79e1da74b9da58166289446140a40821c87a" "20230308072828.914":
-  entity seg_tb at 1( 0) + 0 on 721;
-  architecture rtl of seg_tb at 8( 100) + 0 on 722;
-file "/home/gueg/Progra/FPGHat/fpga/" "seg.vhd" "6f2fffe2f2dcf9b417945f2312d30ac6afc0e30d" "20230308072828.763":
-  entity seg at 1( 0) + 0 on 719;
-  architecture rtl of seg at 35( 868) + 0 on 720;
-file "/home/gueg/Progra/FPGHat/fpga/" "clkgen_tb.vhd" "7f4e5d2559f317014ef3dad575618c9f1f26f2f0" "20230214061247.535":
-  entity clkgen_tb at 1( 0) + 0 on 609;
-  architecture rtl of clkgen_tb at 8( 103) + 0 on 610;
+file "/home/gueg/Progra/FPGHat/fpga/" "scope_tb.vhd" "41321cb3d8b9b34b3f40340c259b8f22171c3634" "20230504171518.113":
+  entity scope_tb at 1( 0) + 0 on 845;
+  architecture scope_tb_arch of scope_tb at 8( 79) + 0 on 846;
+file "/home/gueg/Progra/FPGHat/fpga/" "scope.vhd" "1c251ebd9e6f28824a8c4bdd4924b0c6d05d50d1" "20230504171518.024":
+  entity scope at 1( 0) + 0 on 843;
+  architecture rtl of scope at 35( 1044) + 0 on 844;
+file "/home/gueg/Progra/FPGHat/fpga/" "adc_tb.vhd" "fed784463966fc6ca89352c9a09e4d7da63c8ddb" "20230503054023.343":
+  entity adc_tb at 1( 0) + 0 on 819;
+  architecture adc_tb_arch of adc_tb at 8( 75) + 0 on 820;
 file "/home/gueg/Progra/FPGHat/fpga/" "uart_tb.vhd" "032a57342ffd3c51417c40fa25e106be0517da35" "20230214172522.411":
   entity uart_tb at 1( 0) + 0 on 709;
   architecture uart_tb_arch of uart_tb at 8( 77) + 0 on 710;
-file "/home/gueg/Progra/FPGHat/fpga/" "adc_tb.vhd" "994fd4c0b4f16f5f429bb95b68295847424026e7" "20230331092249.405":
-  entity adc_tb at 1( 0) + 0 on 789;
-  architecture adc_tb_arch of adc_tb at 8( 75) + 0 on 790;
+file "/home/gueg/Progra/FPGHat/fpga/" "clkgen_tb.vhd" "7f4e5d2559f317014ef3dad575618c9f1f26f2f0" "20230214061247.535":
+  entity clkgen_tb at 1( 0) + 0 on 609;
+  architecture rtl of clkgen_tb at 8( 103) + 0 on 610;
+file "/home/gueg/Progra/FPGHat/fpga/" "seg.vhd" "6f2fffe2f2dcf9b417945f2312d30ac6afc0e30d" "20230308072828.763":
+  entity seg at 1( 0) + 0 on 719;
+  architecture rtl of seg at 35( 868) + 0 on 720;
+file "/home/gueg/Progra/FPGHat/fpga/" "seg_tb.vhd" "c1bd79e1da74b9da58166289446140a40821c87a" "20230308072828.914":
+  entity seg_tb at 1( 0) + 0 on 721;
+  architecture rtl of seg_tb at 8( 100) + 0 on 722;
+file "/home/gueg/Progra/FPGHat/fpga/" "clkgen.vhd" "d24d7721bbde1b3944a354c6e3fe09d7c3f8fd34" "20230214061247.448":
+  entity clkgen at 1( 0) + 0 on 607;
+  architecture rtl of clkgen at 20( 482) + 0 on 608;
+file "/home/gueg/Progra/FPGHat/fpga/" "uart.vhd" "39a4c0bc03eec532a207f0ab42b056105fb32859" "20230331152259.935":
+  entity uart at 1( 0) + 0 on 791;
+  architecture uart_arch of uart at 26( 686) + 0 on 792;
+file "/home/gueg/Progra/FPGHat/fpga/" "buf.vhd" "f66b2360806353b00a81b0382a2c3d8499ac5999" "20230213060406.116":
+  entity buf at 1( 0) + 0 on 395;
+  architecture buf_arch of buf at 17( 267) + 0 on 396;
+file "/home/gueg/Progra/FPGHat/fpga/" "adc.vhd" "fc209cda7dcbac90707e14069b833f94cc55435e" "20230503054023.259":
+  entity adc at 1( 0) + 0 on 817;
+  architecture rtl of adc at 26( 633) + 0 on 818;

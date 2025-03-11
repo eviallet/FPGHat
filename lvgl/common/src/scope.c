@@ -1,5 +1,5 @@
 #ifdef BUILD_STM32
-  #include "scope.h"
+  #include "common/scope.h"
 #else
   #include "common/inc/scope.h"
 #endif

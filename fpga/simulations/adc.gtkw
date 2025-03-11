@@ -1,31 +1,52 @@
 [*]
 [*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
-[*] Sun Mar 12 11:00:24 2023
+[*] Wed May  3 05:42:10 2023
 [*]
 [dumpfile] "/home/gueg/Progra/FPGHat/fpga/simulations/adc.fst"
-[dumpfile_mtime] "Sun Mar 12 11:00:18 2023"
-[dumpfile_size] 742
+[dumpfile_mtime] "Wed May  3 05:40:23 2023"
+[dumpfile_size] 801
 [savefile] "/home/gueg/Progra/FPGHat/fpga/simulations/adc.gtkw"
 [timestart] 0
 [size] 1920 994
 [pos] 29 25
-*-27.118093 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-27.255596 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [sst_width] 291
 [signals_width] 230
 [sst_expanded] 1
-[sst_vpaned_height] 245
+[sst_vpaned_height] 229
 @28
 sig_clk
 sig_sample_available
 sig_sample_request
-@29
 sig_adc_clk
-@28
 sig_sck
-@22
-sig_sdi[9:0]
-@28
-sig_sdo
 sig_ssn
+sig_sdo_1
+(0)sig_sdi[19:0]
+(1)sig_sdi[19:0]
+(2)sig_sdi[19:0]
+(3)sig_sdi[19:0]
+(4)sig_sdi[19:0]
+(5)sig_sdi[19:0]
+(6)sig_sdi[19:0]
+(7)sig_sdi[19:0]
+(8)sig_sdi[19:0]
+(9)sig_sdi[19:0]
+sig_sdo_2
+@22
+(10)sig_sdi[19:0]
+(11)sig_sdi[19:0]
+(12)sig_sdi[19:0]
+(13)sig_sdi[19:0]
+(14)sig_sdi[19:0]
+(15)sig_sdi[19:0]
+(16)sig_sdi[19:0]
+(17)sig_sdi[19:0]
+(18)sig_sdi[19:0]
+(19)sig_sdi[19:0]
+@800022
+sig_sdi[19:0]
+@1001200
+-group_end
 [pattern_trace] 1
 [pattern_trace] 0

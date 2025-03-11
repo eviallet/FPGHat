@@ -48,6 +48,13 @@ entity top is
         -- UART
         ftdi_rx : in std_logic;
         ftdi_tx : out std_logic;
+        fpga_rx : in std_logic;
+        fpga_tx : out std_logic;
+
+        -- SPI
+        st_spi_sck : out std_logic;
+        st_spi_sdo : out std_logic;
+        st_spi_nss : out std_logic;
 
         -- Connectors
         -- CN1
@@ -83,12 +90,15 @@ architecture rtl of top is
     signal clk_adc : std_logic;
     signal clk_seg : std_logic;
     signal clk_uart: std_logic;
+    signal clk_spi: std_logic;
     signal heartbeat: std_logic;
 
     -- ADCs
     signal adc_int_clk : std_logic;
     signal adc_int_ssn : std_logic;
-    signal adc1_out: std_logic_vector(9 downto 0);
+    signal adc_sdo : std_logic_vector(1 downto 0);
+    signal adc_out: std_logic_vector(19 downto 0);
+    signal adc1_out : std_logic_vector(9 downto 0);
     signal adc1_clk_sample : std_logic;
     signal adc1_avail: std_logic;
     signal adc1_volts: std_logic_vector(15 downto 0);
@@ -102,6 +112,11 @@ architecture rtl of top is
     signal uart_ftdi_sdo : std_logic_vector(7 downto 0); 
     signal uart_ftdi_tx_request : std_logic := '0';
     signal uart_ftdi_rx_available : std_logic;
+    signal spi_tx_request : std_logic := '0';
+    signal spi_tx_data : std_logic_vector(7 downto 0); 
+    signal spi_sck_dbg : std_logic;
+    signal spi_sdo_dbg : std_logic;
+    signal spi_nss_dbg : std_logic;
 
 begin
     -- Reset
@@ -159,7 +174,7 @@ begin
     );
     clkgen_adc_sample: entity work.clkgen
         generic map(
-            prescaler => 23
+            prescaler => 20 -- 23 for 1/2 second
         )
         port map(
             CLK_IN => mclk,
@@ -168,17 +183,19 @@ begin
     );
     adc_clk <= adc_int_clk;
     adc_ssn <= adc_int_ssn;
+    adc_sdo <= adc1_sdo & adc2_sdo;
     adc1: entity work.adc
         port map(
-            CLK  => clk_adc,
-            RST  => rst,
-            SCK  => adc_int_clk,
-            SSN  => adc_int_ssn,
-            SDI  => adc1_sdo,
-            DAT  => adc1_out,
+            CLK => clk_adc,
+            RST => rst,
+            SCK => adc_int_clk,
+            SSN => adc_int_ssn,
+            SDI => adc_sdo,
+            DAT => adc_out,
             SAMPLE_REQUEST => adc1_clk_sample,
             SAMPLE_AVAILABLE => adc1_avail
     );
+    adc1_out <= adc_out(adc_out'high downto adc_out'high-9);
     adc1_display: entity work.adc_display
         port map(
             CLK => mclk,
@@ -254,17 +271,49 @@ begin
         port map (
             CLK  => clk_uart,
             RST  => rst,
-            RX => ftdi_rx,
+            RX => fpga_rx,
             SDI => uart_ftdi_sdi,
-            TX => ftdi_tx,
+            TX => fpga_tx,
             SDO => uart_ftdi_sdo,
             TX_REQUEST => uart_ftdi_tx_request,
             RX_AVAILABLE => uart_ftdi_rx_available
     );
+
     -- UART echo
     -- uart_ftdi_tx_request <= uart_ftdi_rx_available;
-    uart_ftdi_tx_request <= adc1_avail;
-    uart_ftdi_sdo <= adc1_out(adc1_out'high downto 2);
+
+    -- UART ADC
+    -- uart_ftdi_tx_request <= adc1_avail;
+    -- uart_ftdi_sdo <= adc1_out(adc1_out'high downto 2);
+
+
+    -- SPI
+    clkgen_spi: entity work.clkgen
+        generic map(
+            -- 120MHz/8 (2^3) = 15 MHz
+            prescaler => 2
+        )
+        port map(
+            CLK_IN => mclk,
+            RST => rst,
+            CLK_OUT => clk_spi
+    );
+    spi : entity work.spi
+        port map (
+            CLK => clk_spi,
+            RST => rst,
+            SCK => spi_sck_dbg,
+            SSN => spi_nss_dbg,
+            SDO => spi_sdo_dbg,
+            DAT => spi_tx_data,
+            TRANSMIT_REQUEST => spi_tx_request
+    );
+    spi_tx_request <= adc1_avail;
+    spi_tx_data <= adc1_out(adc1_out'high downto 2);
+
+    st_spi_sck <= spi_sck_dbg;
+    st_spi_nss <= spi_sdo_dbg;
+    st_spi_sdo <= spi_nss_dbg;
 
     -- Connectors
     cn1_1  <= adc_int_clk;
@@ -272,9 +321,9 @@ begin
     cn1_3  <= adc1_sdo;
     cn1_5  <= adc1_avail;
     cn1_10 <= adc1_clk_sample;
-    -- cn1_11 <= ftdi_int_rx;
-    -- cn1_12 <= ftdi_int_tx;
-    -- cn1_13 <= sampling_dbg;
+    cn1_11 <= spi_sck_dbg;
+    cn1_12 <= spi_sdo_dbg;
+    cn1_13 <= spi_nss_dbg;
 
 
 end rtl;

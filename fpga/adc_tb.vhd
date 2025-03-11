@@ -10,27 +10,32 @@ architecture adc_tb_arch of adc_tb is
     --------------- SIM SETTINGS ---------------
     signal tb_finished : std_logic;
     constant clk_half_period : time := 4 ns; -- 120 MHz
-    constant sim_duration : time := 1 us;
+    constant sim_duration : time := 1.1 us;
 
     --------------- BENCH SIGNALS --------------
     constant frame_start : time := 20 ns;
     constant frame_length : integer := 12;
 
     type table is array (frame_length-1 downto 0) of std_logic;
-    constant adc_out_table : table := (
+    constant adc_out_table_1 : table := (
         '0','0','1','0','1','0','0','0','1','0','1','1'
+    );
+    constant adc_out_table_2 : table := (
+        '0','0','1','0','0','0','0','1','0','0','0','0'
     );
     
     --------------- PHYSICAL PINS --------------
     signal sig_sck : std_logic;
-    signal sig_sdo : std_logic;
+    signal sig_sdo_1 : std_logic;
+    signal sig_sdo_2 : std_logic;
     signal sig_ssn : std_logic;
 
     --------------- INTERNAL SIGNALS --------------
     signal sig_clk : std_logic := 'U'; -- 'U' necessary for clock sim
     signal sig_adc_clk : std_logic;
     signal tb_rst : std_logic;
-    signal sig_sdi : std_logic_vector(9 downto 0);
+    signal sig_sdo : std_logic_vector(1 downto 0);
+    signal sig_sdi : std_logic_vector(19 downto 0);
     signal sig_sample_request : std_logic;
     signal sig_sample_available : std_logic;
 
@@ -48,6 +53,7 @@ begin
     );
 
     --------------- DUT --------------
+    sig_sdo <= sig_sdo_1 & sig_sdo_2;
     dut : entity work.adc 
         port map(
             CLK  => sig_adc_clk,
@@ -81,7 +87,8 @@ begin
     begin
         if rising_edge(sig_sck) then
             if current_bit > 1 and current_bit < frame_length then -- skip dummy bits
-                sig_sdo <= adc_out_table(current_bit);
+                sig_sdo_1 <= adc_out_table_1(current_bit);
+                sig_sdo_2 <= adc_out_table_2(current_bit);
             end if;
             if current_bit < frame_length then
                 current_bit := current_bit + 1;

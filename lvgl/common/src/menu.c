@@ -1,9 +1,13 @@
 #ifdef BUILD_STM32
-  #include "menu.h"
+  #include "common/menu.h"
 #else
   #include "common/inc/menu.h"
 #endif
 
+/* ==================================
+                MODE
+   ==================================
+*/
 
 static SCOPE_MODE current_mode = MODE_RUN;
 
@@ -14,7 +18,6 @@ static const char *mode_single_text = " Single";
 static const char *mode_stop_text = " Stop";
 #define MODE_STOP_COLOR 0xFF0000
 
-static uint8_t item_index = 0;
 static lv_obj_t *mode_icon;
 static lv_obj_t *mode_label;
 
@@ -34,6 +37,201 @@ void change_mode(SCOPE_MODE target_mode) {
         lv_label_set_text(mode_label, mode_stop_text);
     }
 }
+
+void build_mode_item(lv_obj_t* inner_box) {
+    mode_icon = lv_label_create(inner_box);
+    lv_obj_set_style_text_font(mode_icon, &lv_font_montserrat_20, LV_STATE_DEFAULT);
+    lv_obj_set_flex_align(mode_icon, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_SPACE_EVENLY);
+    mode_label = lv_label_create(inner_box);
+    lv_obj_set_style_text_font(mode_label, &lv_font_montserrat_20, LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(mode_label, lv_color_hex(MENU_ITEM_LABEL), LV_STATE_DEFAULT);
+    lv_obj_set_flex_align(mode_label, LV_FLEX_ALIGN_END, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_SPACE_EVENLY);
+
+    change_mode(MODE_RUN);
+}
+
+
+void mode_callback(lv_event_t* event) {
+    switch(current_mode) {
+        case MODE_RUN:
+            change_mode(MODE_SINGLE);
+            return;
+        case MODE_SINGLE:
+            change_mode(MODE_STOP);
+            return;
+        case MODE_STOP:
+            change_mode(MODE_RUN);
+            return;
+    }
+}
+
+
+/* ==================================
+            TUNING BUTTONS
+   ==================================
+*/
+
+bool are_tuning_buttons_shown = false;
+lv_obj_t *btnParent;
+lv_obj_t *btnUp;
+lv_obj_t *btnDown;
+
+lv_obj_t* create_tuning_button(BTN_TYPE type, lv_coord_t size) {
+    lv_obj_t *btn = lv_btn_create(lv_scr_act());
+    // Size and layout
+    lv_obj_set_size(btn, size, size);
+    // Styling
+    lv_obj_set_style_bg_color(btn, lv_color_hex(MENU_ITEM_BKG), LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(btn, lv_color_hex(MENU_ITEM_BKG_SELECTED), LV_STATE_PRESSED);
+
+    // Button icon
+    lv_obj_t* label = lv_label_create(btn);
+    // Size and layout
+    lv_obj_set_flex_align(btn, LV_FLEX_FLOW_COLUMN, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_SPACE_EVENLY);
+    // Contents
+    lv_label_set_text(label, type == BTN_UP ? LV_SYMBOL_UP : LV_SYMBOL_DOWN);
+    // Styling
+    lv_obj_set_style_text_font(label, &lv_font_montserrat_26, LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(label, lv_color_hex(MENU_ITEM_LABEL), LV_STATE_DEFAULT);
+    // Interactions
+    lv_obj_clear_flag(label, LV_OBJ_FLAG_CLICKABLE);
+
+    // Item callback
+    lv_obj_add_event_cb(btn, &tuning_button_callback, LV_EVENT_CLICKED, /* user_data */ NULL);
+
+    // TODO hide buttons when clicking elsewhere
+
+    return btn;
+}
+
+void tuning_button_handler(lv_event_t* caller) {
+    lv_obj_t *attachedMenuItem = lv_event_get_current_target(caller);
+    if(are_tuning_buttons_shown) {
+        if(btnParent == attachedMenuItem) {
+            hide_tuning_buttons(); // hide tuning buttons (toggle)
+        } else {
+            hide_tuning_buttons(); // hide other tuning buttons
+            show_tuning_buttons(caller);
+        }
+    } else {
+        show_tuning_buttons(caller);
+    }
+}
+
+void show_tuning_buttons(lv_event_t* caller) {
+    lv_obj_t *parent = lv_event_get_user_data(caller); // menu layout
+    lv_obj_t *attachedMenuItem = lv_event_get_current_target(caller);
+
+    lv_coord_t size = MENU_ITEM_WIDTH / 2;
+
+    btnParent = attachedMenuItem;
+    btnUp = create_tuning_button(BTN_UP, size);
+    btnDown = create_tuning_button(BTN_DOWN, size);
+    are_tuning_buttons_shown = true;
+
+    lv_coord_t btnCoordX = lv_obj_get_x(parent) - size - MENU_HOR_MARGIN;
+    lv_coord_t btnCoordY = lv_obj_get_y(attachedMenuItem) + lv_obj_get_height(attachedMenuItem) / 2;
+
+    lv_obj_set_pos(
+        btnUp,
+        btnCoordX,
+        btnCoordY - size - MENU_VER_MARGIN / 2
+    );
+    lv_obj_set_pos(
+        btnDown,
+        btnCoordX,
+        btnCoordY + MENU_VER_MARGIN / 2
+    );
+}
+
+void hide_tuning_buttons() {
+    if(!are_tuning_buttons_shown) {
+        return;
+    }
+    are_tuning_buttons_shown = false;
+    lv_obj_del(btnUp);
+    lv_obj_del(btnDown);
+}
+
+void tuning_button_callback(lv_event_t* event) {
+    lv_obj_t *caller = lv_event_get_target(event);
+    if(caller == btnUp) {
+        increment_scale();
+    }
+    else if (caller == btnDown) {
+        decrement_scale();
+    }
+}
+
+/* ==================================
+              TRIGGER
+   ==================================
+*/
+
+void trigger_callback(lv_event_t* event) {
+    tuning_button_handler(event);
+    on_trigger_clicked();
+    printf("Trigger");
+}
+
+
+
+/* ==================================
+               SCALE
+   ==================================
+*/
+
+#define SCALES_COUNT 9
+static uint8_t current_scale = 4;
+static float scale_values[SCALES_COUNT] = {
+    0.01,
+    0.02,
+    0.05,
+    0.1,
+    0.2,
+    0.5,
+    1,
+    2,
+    5
+};
+static lv_obj_t *scale_label;
+
+void scale_callback(lv_event_t* event) {
+    tuning_button_handler(event);
+    printf("Scale");
+}
+
+void increment_scale() {
+    if(current_scale + 1 < SCALES_COUNT) {
+        current_scale++;
+        update_scale_item();
+    }
+}
+
+void decrement_scale() {
+    if(0 <= current_scale - 1) {
+        current_scale--;
+        update_scale_item();
+    }
+}
+
+void build_scale_item(lv_obj_t* inner_box) {
+    scale_label = lv_label_create(inner_box);
+    lv_obj_set_style_text_font(scale_label, &lv_font_montserrat_20, LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(scale_label, lv_color_hex(MENU_ITEM_LABEL), LV_STATE_DEFAULT);
+    lv_obj_set_flex_align(scale_label, LV_FLEX_ALIGN_END, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_SPACE_EVENLY);
+    update_scale_item();
+}
+
+void update_scale_item() {
+    float scale_value = scale_values[current_scale];
+    lv_label_set_text_fmt(scale_label, "%.2f V/div", scale_value);
+}
+
+/* ==================================
+               GLOBAL
+   ==================================
+*/
 
 void create_menu_item(lv_obj_t* parent, const char* text, lv_callback callback) {
     // Menu item box
@@ -82,46 +280,33 @@ void create_menu_item(lv_obj_t* parent, const char* text, lv_callback callback) 
     lv_obj_clear_flag(inner_box, LV_OBJ_FLAG_CLICKABLE);
 
     // Item callback
-    lv_obj_add_event_cb(item_box, *callback, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_event_cb(item_box, *callback, LV_EVENT_CLICKED, /* user_data */ parent);
 
-    if(item_index == 0) { // Mode item
-        mode_icon = lv_label_create(inner_box);
-        lv_obj_set_style_text_font(mode_icon, &lv_font_montserrat_20, LV_STATE_DEFAULT);
-        lv_obj_set_flex_align(mode_icon, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_SPACE_EVENLY);
-        mode_label = lv_label_create(inner_box);
-        lv_obj_set_style_text_font(mode_label, &lv_font_montserrat_20, LV_STATE_DEFAULT);
-        lv_obj_set_flex_align(mode_label, LV_FLEX_ALIGN_END, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_SPACE_EVENLY);
-
-        change_mode(MODE_RUN);
+    if(IS_MENU_ITEM(text, MENU_ITEM_MODE)) {
+        build_mode_item(inner_box);
     }
-    item_index++;
+    else if(IS_MENU_ITEM(text, MENU_ITEM_SCALE)) {
+        build_scale_item(inner_box);
+    }
 }
 
-static void mode_callback(lv_event_t* event) {
-    switch(current_mode) {
-        case MODE_RUN:
-            change_mode(MODE_SINGLE);
-            return;
-        case MODE_SINGLE:
-            change_mode(MODE_STOP);
-            return;
-        case MODE_STOP:
-            change_mode(MODE_RUN);
-            return;
-        }
-    
-}
-
-static int16_t cur_x = 0;
-static void trigger_callback(lv_event_t *event) {
-    cur_x++;
-    add_data(CHART_CH1, cur_x, lv_rand(0, 100));
-}
-
-static void scale_callback(lv_event_t* event) {
-}
 
 void create_menu(void) {
+    MenuItem items[MENU_ITEM_COUNT] = {
+        {
+            .name = "Mode",
+            .callback = mode_callback
+        },
+        {
+            .name = "Trigger",
+            .callback = trigger_callback
+        },
+        {
+            .name = "Scale",
+            .callback = scale_callback
+        }
+    };
+
     // Scrollable panel
     lv_obj_t * panel = lv_obj_create(lv_scr_act());
     // Size and layout
@@ -138,8 +323,8 @@ void create_menu(void) {
     lv_obj_set_style_shadow_width(panel, 2, LV_STATE_DEFAULT);
 
     // Fill menu
-    create_menu_item(panel, "Mode", mode_callback);
-    create_menu_item(panel, "Trigger", trigger_callback);
-    create_menu_item(panel, "Scale", scale_callback);
+    for(uint8_t i = 0; i < MENU_ITEM_COUNT; i++) {
+        create_menu_item(panel, items[i].name, items[i].callback);
+    }
 
 }

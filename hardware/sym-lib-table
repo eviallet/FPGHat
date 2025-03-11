@@ -1,2 +1,4 @@
 (sym_lib_table
+  (version 7)
+  (lib (name "gueg_lib")(type "KiCad")(uri "/home/gueg/Synchronized/Progra/TTT/digital_board/lib/gueg_lib.kicad_sym")(options "")(descr ""))
 )
